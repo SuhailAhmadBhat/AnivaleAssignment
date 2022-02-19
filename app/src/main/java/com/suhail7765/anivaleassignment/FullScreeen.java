@@ -32,11 +32,4 @@ public class FullScreeen extends AppCompatActivity {
         Glide.with(FullScreeen.this).load(Url).into(mImageView);
 
     }
-    @Override
-    public void onBackPressed () {
-        super.onBackPressed();
-        Intent intent = new Intent(FullScreeen.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 }
