@@ -1,0 +1,75 @@
+package com.suhail7765.anivaleassignment;
+
+import android.content.ClipData;
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.Model;
+
+import java.util.List;
+
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
+
+    Context context;
+    List<Item> postList;
+
+    public PostAdapter(Context context , List<Item> postList){
+        this.context = context;
+        this.postList = postList;
+    }
+    @NonNull
+    @Override
+    public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View mView = LayoutInflater.from(context).inflate(R.layout.eachpost , parent , false);
+        return new PostHolder(mView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull PostHolder holder, int position) {
+
+        final Item item = postList.get(position);
+        holder.setImageView(item.getImageUrl());
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,FullScreeen.class);
+                intent.putExtra("Img",item.getImageUrl());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return postList.size();
+    }
+
+    public class PostHolder extends RecyclerView.ViewHolder{
+        ImageView imageView;
+        TextView mLikes, mTags;
+        View view;
+        public PostHolder(@NonNull View itemView) {
+            super(itemView);
+            view = itemView;
+
+        }
+
+        public void setImageView(String url) {
+            imageView = view.findViewById(R.id.imageview);
+            Glide.with(context).load(url).into(imageView);
+
+        }
+    }
+}
